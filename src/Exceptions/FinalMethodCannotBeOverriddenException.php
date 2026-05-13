@@ -4,7 +4,7 @@ namespace Athwari\MethodOverrider\Exceptions;
 
 use Exception;
 
-class FinalMethodCannotBeOverridden extends Exception
+class FinalMethodCannotBeOverriddenException extends Exception
 {
     public function __construct(string $method)
     {

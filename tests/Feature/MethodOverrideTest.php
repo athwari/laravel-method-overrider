@@ -3,6 +3,7 @@
 namespace Athwari\MethodOverrider\Tests\Feature;
 
 use Athwari\MethodOverrider\Exceptions\ClassNotFoundException;
+use Athwari\MethodOverrider\Exceptions\FinalMethodCannotBeOverriddenException;
 use Athwari\MethodOverrider\Exceptions\InvalidImplementationException;
 use Athwari\MethodOverrider\Exceptions\MethodNotFoundException;
 use Athwari\MethodOverrider\Facades\MethodOverrider;
@@ -166,14 +167,11 @@ it('throws exception for invalid implementation count', function () {
 
 })->throws(InvalidImplementationException::class);
 
-it('skips final methods', function () {
-
-    $service = MethodOverrider::override(
+it('throws exception for final methods', function () {
+    MethodOverrider::override(
         TestService::class,
         'finalMethod',
         fn () => 'changed'
     );
 
-    expect($service->finalMethod())
-        ->toBe('final');
-});
+})->throws(FinalMethodCannotBeOverriddenException::class);

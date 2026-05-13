@@ -1,7 +1,8 @@
 <?php
 
-namespace Athwari\MethodOverrider;
+namespace Athwari\MethodOverrider\Proxy;
 
+use Athwari\MethodOverrider\Support\MethodSignatureBuilder;
 use Athwari\MethodOverrider\Support\ParameterFormatter;
 use ReflectionClass;
 
@@ -13,22 +14,17 @@ class ProxyClassGenerator
     ) {}
 
     public function generate(
+        string $proxyClassName,
         string $class,
         array $methods,
         array $implementations,
-    ): object {
-
+    ): string {
         $reflection = new ReflectionClass($class);
-
         $definitions = [];
+        $hasStaticMethods = false;
 
         foreach ($methods as $index => $methodName) {
-
             $method = $reflection->getMethod($methodName);
-
-            if ($method->isFinal()) {
-                continue;
-            }
 
             $signature = $this->signatureBuilder->build($method);
 
@@ -54,6 +50,10 @@ class ProxyClassGenerator
                 ? 'self::$staticImplementations'
                 : '$this->implementations';
 
+            if ($method->isStatic()) {
+                $hasStaticMethods = true;
+            }
+
             $argumentList = $arguments ? ', '.$arguments : '';
 
             $definitions[] = <<<PHP
@@ -71,23 +71,26 @@ PHP;
         }
 
         $methodsCode = implode("\n\n", $definitions);
+        $parentClass = '\\'.$class;
+        $staticProperty = $hasStaticMethods ? 'protected static array $staticImplementations = [];' : '';
+        $staticSetter = $hasStaticMethods ? 'self::$staticImplementations = $implementations;' : '';
 
-        $anonymousClass = <<<PHP
-return new class(\$implementations) extends \\{$class}
+        return <<<PHP
+declare(strict_types=1);
+
+class {$proxyClassName} extends {$parentClass}
 {
     protected array \$implementations;
-    protected static array \$staticImplementations = [];
+    {$staticProperty}
 
     public function __construct(array \$implementations)
     {
         \$this->implementations = \$implementations;
-        self::\$staticImplementations = \$implementations;
+        {$staticSetter}
     }
 
     {$methodsCode}
-};
+}
 PHP;
-
-        return eval($anonymousClass);
     }
 }
