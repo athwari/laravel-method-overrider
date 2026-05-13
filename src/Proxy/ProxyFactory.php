@@ -2,8 +2,6 @@
 
 namespace Athwari\MethodOverrider\Proxy;
 
-use Athwari\MethodOverrider\Proxy\ProxyClassGenerator;
-
 class ProxyFactory
 {
     public function __construct(

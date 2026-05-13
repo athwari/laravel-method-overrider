@@ -2,9 +2,9 @@
 
 namespace Athwari\MethodOverrider\Tests\Unit;
 
-use ReflectionMethod;
 use Athwari\MethodOverrider\Support\ParameterFormatter;
 use Athwari\MethodOverrider\Support\ReturnTypeFormatter;
+use ReflectionMethod;
 
 class SignatureBuilder
 {

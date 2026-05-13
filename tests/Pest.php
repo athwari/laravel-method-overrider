@@ -1,5 +1,7 @@
 <?php
 
+use Athwari\MethodOverrider\Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,4 +13,4 @@
 |
 */
 
-uses(\Athwari\MethodOverrider\Tests\TestCase::class)->in('Feature', 'Unit');
+uses(TestCase::class)->in('Feature', 'Unit');

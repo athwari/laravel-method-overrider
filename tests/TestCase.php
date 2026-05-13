@@ -2,8 +2,8 @@
 
 namespace Athwari\MethodOverrider\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Athwari\MethodOverrider\MethodOverriderServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {

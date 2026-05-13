@@ -2,8 +2,8 @@
 
 namespace Athwari\MethodOverrider;
 
-use Illuminate\Support\ServiceProvider;
 use Athwari\MethodOverrider\Proxy\ProxyFactory;
+use Illuminate\Support\ServiceProvider;
 
 class MethodOverriderServiceProvider extends ServiceProvider
 {

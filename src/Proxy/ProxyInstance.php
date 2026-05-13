@@ -5,6 +5,7 @@ namespace Athwari\MethodOverrider\Proxy;
 class ProxyInstance
 {
     protected static array $staticMethodMap = [];
+
     protected static ?string $staticTargetClass = null;
 
     public function __construct(
