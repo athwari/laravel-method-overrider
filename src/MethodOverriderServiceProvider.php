@@ -3,6 +3,7 @@
 namespace Athwari\MethodOverrider;
 
 use Illuminate\Support\ServiceProvider;
+use Athwari\MethodOverrider\Proxy\ProxyFactory;
 
 class MethodOverriderServiceProvider extends ServiceProvider
 {
@@ -13,6 +14,7 @@ class MethodOverriderServiceProvider extends ServiceProvider
             'method-overrider'
         );
 
+        $this->app->singleton(ProxyFactory::class);
         $this->app->singleton(MethodOverrider::class);
     }
 

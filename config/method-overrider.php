@@ -4,14 +4,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Ignore Final Methods
+    | Final Method Policy
     |--------------------------------------------------------------------------
-    |
-    | Final methods cannot be overridden. When enabled, they will
-    | simply be skipped instead of throwing exceptions.
+    | ignore | warn | strict
     |
     */
 
-    'ignore_final_methods' => true,
+    'final_method_policy' => env(
+        'METHOD_OVERRIDER_FINAL_POLICY',
+        'warn'
+    ),
 
 ];
